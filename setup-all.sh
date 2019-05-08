@@ -277,10 +277,8 @@ fi
 echo '---- Finished installing freerdp ----'
 cd ../.. || exit 99
 echo '---- Checking out casablanca master ----'
-git_clone_pull cpprestsdk https://github.com/Microsoft/cpprestsdk  || { echo 'Unable to download cpprestsdk from github'; exit 99; }
-cd cpprestsdk || exit 99
-git submodule update --init || exit 99
-cd Release || exit 99
+git clone https://github.com/microsoft/cpprestsdk.git --recursive || { echo 'Unable to download cpprestsdk from github'; exit 99; }
+cd cpprestsdk/Release || exit 99
 cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release . || exit 8
 make || exit 8
 #make test || exit 9
