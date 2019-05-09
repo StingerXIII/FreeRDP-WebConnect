@@ -248,7 +248,7 @@ fi
 echo '---- Finished installing ehs ----'
 cd ../.. || exit 99
 echo '---- Checking out freerdp master ----'
-git_clone_pull FreeRDP https://github.com/FreeRDP/FreeRDP.git stable-1.1 || { echo 'Unable to download FreeRDP'; exit 99; }
+git_clone_pull FreeRDP https://github.com/FreeRDP/FreeRDP.git 851f097 || { echo 'Unable to download FreeRDP'; exit 99; }
 cd FreeRDP || exit 99
 echo '---- Start installing freerdp ----'
 mkdir -p build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr .. || exit 6
