@@ -23,7 +23,7 @@ case $DISTRO in
 	*buntu*16*)
 			echo 'Ubuntu 16.04 detected. Installing required packages...'
 			apt-get update
-			apt-get install -y git gcc g++ libssl-dev libpng-dev cmake libboost-all-dev libdwarf-dev binutils-dev
+			apt-get install -y git gcc g++ libssl-dev libpng-dev cmake libboost-all-dev libdwarf-dev binutils-dev pkgconf libiberty-dev
 			;;
 	*buntu*14*)
 		echo 'Ubuntu 14.04 detected. Installing required packages...'
