@@ -12,6 +12,9 @@ else
 	BITNESS=''
 fi
 
+# get a cpu core count for parallel make
+CPUCOUNT=`lscpu | grep "^CPU(s):" | awk '{print $2}'`
+
 # clean-up ehs and freerdp files and folders. Is automatically invoked if the script encounters an error.
 
 function cleanup()
@@ -236,7 +239,7 @@ echo '---- Checking out ehs trunk code ----'
 git_clone_pull EHS https://github.com/cloudbase/EHS.git || { echo 'Unable to download ehs from github'; exit 99; }
 cd EHS || exit 99
 echo '---- Starting ehs build ----'
-mkdir -p build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make || exit 4
+mkdir -p build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make -j $CPUCOUNT || exit 4
 echo '---- Finished building ehs ----'
 if [[ $sudo_present -eq 1 ]]; then
 	echo 'sudo available. Please enter your password to install ehs: '
@@ -253,7 +256,7 @@ cd FreeRDP || exit 99
 echo '---- Start installing freerdp ----'
 mkdir -p build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr .. || exit 6
 echo '---- Building freerdp ----'
-make || exit 6
+make -j $CPUCOUNT || exit 6
 echo '---- Finished building freerdp ----'
 if [[ $sudo_present -eq 1 ]]; then
 	echo 'sudo available. Please enter your password to install freerdp: '
@@ -280,7 +283,7 @@ echo '---- Checking out casablanca master ----'
 git clone https://github.com/microsoft/cpprestsdk.git --recursive || { echo 'Unable to download cpprestsdk from github'; exit 99; }
 cd cpprestsdk/Release || exit 99
 cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release . || exit 8
-make || exit 8
+make -j $CPUCOUNT || exit 8
 #make test || exit 9
 if [[ $sudo_present -eq 1 ]]; then
 	echo 'sudo available. Please enter your password to install casablanca: '
@@ -302,6 +305,6 @@ mkdir -p build || exit 99
 cd build || exit 99
 cmake .. || exit 11
 echo '---- Building webconnect ----'
-make || exit 11
+make -j $CPUCOUNT || exit 11
 echo "---- Built wsgate successfully in $PWD ----"
 echo '---- Finished successfully ----'
