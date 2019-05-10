@@ -20,6 +20,11 @@ fi
 #Get distro (snipper take from alsa-info.sh)
 DISTRO=`grep -ihs "buntu\|SUSE\|Fedora\|Debian\|CentOS\|Red Hat Enterprise Linux Server" /etc/{issue,*release,*version}`
 case $DISTRO in
+	*buntu*16*)
+			echo 'Ubuntu 16.04 detected. Installing required packages...'
+			apt-get update
+			apt-get install -y git gcc g++ libssl-dev libpng-dev cmake libboost-all-dev libdwarf-dev binutils-dev
+			;;
 	*buntu*14*)
 		echo 'Ubuntu 14.04 detected. Installing required packages...'
 		apt-get update
